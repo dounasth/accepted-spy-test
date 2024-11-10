@@ -83,8 +83,8 @@ class Spy implements Arrayable
             'full_name' => $this->getName()->fullName(),
             'agency' => $this->getAgency(),
             'country_of_operation' => $this->getCountryOfOperation(),
-            'date_of_birth' => $this->getDateOfBirth(),
-            'date_of_death' => $this->getDateOfDeath(),
+            'date_of_birth' => $this->getDateOfBirth()->format('Y-m-d'),
+            'date_of_death' => $this->getDateOfDeath() ? $this->getDateOfDeath()->format('Y-m-d') : null,
         ];
     }
 }

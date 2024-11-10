@@ -63,6 +63,7 @@ class SpyController
     {
         // Fetch 5 random spies
         $randomSpies = $repository->getRandom(5);
+        $randomSpies = $randomSpies->map(fn(Spy $spy) => ($spy->toArray()));
 
         return response()->json([
             'data' => $randomSpies,
