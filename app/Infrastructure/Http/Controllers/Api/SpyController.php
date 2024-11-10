@@ -6,6 +6,7 @@ use App\Application\Commands\CreateSpy;
 use App\Application\Contracts\CreateSpyActionContract;
 use App\Application\DTOs\SpyDTO;
 use App\Domain\Models\Spy;
+use App\Domain\Repositories\SpyRepository;
 use App\Domain\ValueObjects\Agency;
 use App\Domain\ValueObjects\DateOfBirth;
 use App\Domain\ValueObjects\DateOfDeath;
@@ -50,6 +51,23 @@ class SpyController
             'message' => 'Spy created successfully',
             'data' => $spyDTO->toArray()
         ], 201);
+    }
+
+    /**
+     * Get a list of random spies.
+     *
+     * @param SpyRepository $repository
+     * @return JsonResponse
+     */
+    public function random(SpyRepository $repository): JsonResponse
+    {
+        // Fetch 5 random spies
+        $randomSpies = $repository->getRandom(5);
+        $randomSpiesDTO = $randomSpies->map(fn($spy) => (new SpyDTO($spy)));
+
+        return response()->json([
+            'data' => $randomSpiesDTO,
+        ]);
     }
 
 }

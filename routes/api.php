@@ -7,6 +7,8 @@ use App\Infrastructure\Http\Controllers\Api\SpyController;
 //  Free access endpoints
 Route::middleware('api')->group(function () {
     Route::post('/login', [LoginController::class, 'login']);
+    Route::get('/spies/random', [SpyController::class, 'random'])->name('spies.random')
+        ->middleware('throttle:10,1');
 });
 
 //  Endpoints for authenticated users only

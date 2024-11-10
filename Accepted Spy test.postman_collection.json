@@ -129,6 +129,36 @@
 				}
 			},
 			"response": []
+		},
+		{
+			"name": "/api/spies/random",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{host}}/api/spies/random",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"api",
+						"spies",
+						"random"
+					]
+				}
+			},
+			"response": []
 		}
 	],
 	"event": [

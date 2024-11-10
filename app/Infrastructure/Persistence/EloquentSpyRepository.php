@@ -31,4 +31,9 @@ class EloquentSpyRepository implements SpyRepository
         return $spyEloquent ? $spyEloquent->toDomainModel() : null;
     }
 
+    public function getRandom(int $count): Collection
+    {
+        $spyEloquents = SpyEloquentModel::inRandomOrder()->limit($count)->get();
+        return $spyEloquents->map(fn($spyEloquent) => $spyEloquent->toDomainModel());
+    }
 }

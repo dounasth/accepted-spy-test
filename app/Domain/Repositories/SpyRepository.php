@@ -11,4 +11,6 @@ interface SpyRepository
 
     public function findByNameAndSurname(string $firstName, string $lastName): ?Spy;
 
+    public function getRandom(int $count): Collection;
+
 }
