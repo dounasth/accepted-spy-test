@@ -80,7 +80,7 @@ class SpyController
     public function index(ListSpiesRequest $request, ListSpiesQueryContract $query): JsonResponse
     {
         try {
-            $query = App::make(ListSpiesQuery::class)
+            $spies = $query
                 ->setPerPage($request->input('per_page', 10))
                 ->setFilters([
                     'age' => $request->input('age'),
@@ -88,9 +88,8 @@ class SpyController
                     'first_name' => $request->input('name'),
                     'last_name' => $request->input('surname'),
                 ])
-                ->setSort($request->input('sort', 'full_name'));
-
-            $spies = $query->execute();
+                ->setSort($request->input('sort', 'full_name'))
+                ->execute();
 
             return response()->json($spies);
         } catch (\InvalidArgumentException $e) {
