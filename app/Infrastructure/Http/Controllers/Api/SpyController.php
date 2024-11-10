@@ -4,16 +4,20 @@ namespace App\Infrastructure\Http\Controllers\Api;
 
 use App\Application\Commands\CreateSpy;
 use App\Application\Contracts\CreateSpyActionContract;
+use App\Application\Contracts\ListSpiesQueryContract;
 use App\Application\DTOs\SpyDTO;
+use App\Application\Queries\ListSpiesQuery;
 use App\Domain\Models\Spy;
 use App\Domain\Repositories\SpyRepository;
 use App\Domain\ValueObjects\Agency;
 use App\Domain\ValueObjects\DateOfBirth;
 use App\Domain\ValueObjects\DateOfDeath;
 use App\Domain\ValueObjects\Name;
+use App\Infrastructure\Http\Requests\ListSpiesRequest;
 use App\Infrastructure\Http\Requests\StoreSpyRequest;
 use DateMalformedStringException;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Support\Facades\App;
 
 class SpyController
 {
@@ -68,6 +72,37 @@ class SpyController
         return response()->json([
             'data' => $randomSpiesDTO,
         ]);
+    }
+
+    /**
+     * Get a paginated list of spies with optional sorting and filtering.
+     *
+     * @param ListSpiesRequest $request
+     * @param ListSpiesQueryContract $query
+     * @return JsonResponse
+     */
+    public function index(ListSpiesRequest $request, ListSpiesQueryContract $query): JsonResponse
+    {
+        try {
+            $query = App::make(ListSpiesQuery::class)
+                ->setPerPage($request->input('per_page', 10))
+                ->setFilters([
+                    'age' => $request->input('age'),
+                    'age_range' => $request->input('age_range') ? explode('-', $request->input('age_range')) : null,
+                    'first_name' => $request->input('name'),
+                    'last_name' => $request->input('surname'),
+                ])
+                ->setSort($request->input('sort', 'full_name'));
+
+            $spies = $query->execute();
+            $spies->getCollection()->transform(function (Spy $spy) {
+                return new SpyDTO($spy);
+            });
+
+            return response()->json($spies);
+        } catch (\InvalidArgumentException $e) {
+            return response()->json(['error' => $e->getMessage()], 422);
+        }
     }
 
 }

@@ -36,4 +36,52 @@ class EloquentSpyRepository implements SpyRepository
         $spyEloquents = SpyEloquentModel::inRandomOrder()->limit($count)->get();
         return $spyEloquents->map(fn($spyEloquent) => $spyEloquent->toDomainModel());
     }
+
+    public function paginate(int $perPage = 10, array $filters = [], array $sort = []): mixed
+    {
+        $query = SpyEloquentModel::query();
+
+        // Apply age filter based on birth year
+        $minAge = $maxAge = null;
+        if (isset($filters['age'])) {
+            $minAge = $filters['age'];
+            $maxAge = $filters['age'] + 1;
+
+        } elseif (isset($filters['age_range'])) {
+            [$minAge, $maxAge] = $filters['age_range'];
+        }
+
+        if ($minAge && $maxAge) {
+            $query->whereDate('date_of_birth', '<=', now()->subYears($minAge)->format('Y-m-d'))
+                ->whereDate('date_of_birth', '>=', now()->subYears($maxAge)->format('Y-m-d'));
+        }
+
+
+        // Filter by name and surname
+        if (isset($filters['first_name'])) {
+            $query->where('first_name', 'like', "%{$filters['first_name']}%");
+        }
+
+        if (isset($filters['last_name'])) {
+            $query->where('last_name', 'like', "%{$filters['last_name']}%");
+        }
+
+
+        // Apply sorting
+        foreach ($sort as $field => $direction) {
+            if ($field === 'full_name') {
+                $query->orderBy('first_name', $direction)->orderBy('last_name', $direction);
+            } else {
+                $query->orderBy($field, $direction);
+            }
+        }
+
+        $paginatedSpies = $query->paginate($perPage);
+
+        // Map each Eloquent model to a domain model (Spy)
+        $paginatedSpies->getCollection()->transform(function (SpyEloquentModel $spyModel) {
+            return $spyModel->toDomainModel();
+        });
+        return $paginatedSpies;
+    }
 }

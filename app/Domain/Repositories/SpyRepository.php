@@ -13,4 +13,5 @@ interface SpyRepository
 
     public function getRandom(int $count): Collection;
 
+    public function paginate(int $perPage = 10, array $filters = [], array $sort = []): mixed;
 }

@@ -9,6 +9,7 @@ Route::middleware('api')->group(function () {
     Route::post('/login', [LoginController::class, 'login']);
     Route::get('/spies/random', [SpyController::class, 'random'])->name('spies.random')
         ->middleware('throttle:10,1');
+    Route::get('/spies', [SpyController::class, 'index'])->name('spies.index');
 });
 
 //  Endpoints for authenticated users only

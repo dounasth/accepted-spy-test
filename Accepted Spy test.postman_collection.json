@@ -159,6 +159,41 @@
 				}
 			},
 			"response": []
+		},
+		{
+			"name": "/api/spies",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{host}}/api/spies?sort=full_name,-date_of_birth",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"api",
+						"spies"
+					],
+					"query": [
+						{
+							"key": "sort",
+							"value": "full_name,-date_of_birth"
+						}
+					]
+				}
+			},
+			"response": []
 		}
 	],
 	"event": [
