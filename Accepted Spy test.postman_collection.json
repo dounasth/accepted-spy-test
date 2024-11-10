@@ -1,0 +1,88 @@
+{
+	"info": {
+		"_postman_id": "cadfd275-2b19-4626-85f5-7faea7ddb233",
+		"name": "Accepted Spy test",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "721985"
+	},
+	"item": [
+		{
+			"name": "/api/login",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "email",
+							"value": "dounasth@gmail.com",
+							"type": "text"
+						},
+						{
+							"key": "password",
+							"value": "accepted_test",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{host}}/api/login",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"api",
+						"login"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "host",
+			"value": "http://localhost",
+			"type": "string"
+		},
+		{
+			"key": "user_token",
+			"value": "1|HRng0b8xSKkZekr5MItslJ8zFr399WkaMSafal7ob2d8207d",
+			"type": "string"
+		}
+	]
+}
