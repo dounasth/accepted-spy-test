@@ -29,6 +29,7 @@ The architecture consists of the following layers:
 
 ## USAGE
 
+- Cloen the repository with `git clone https://github.com/dounasth/accepted-spy-test.git`
 - Go to the `./docker` folder
 - Start the docker containers with `docker-compose up --build` or `docker-compose up` if already built
 - To run the tests in the docker, from the docker folder run
