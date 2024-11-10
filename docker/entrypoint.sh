@@ -4,6 +4,8 @@
 echo "Waiting for the database to be ready..."
 /wait-for-it.sh $DB_HOST $DB_PORT
 
+composer install --optimize-autoloader --no-dev
+
 # make key
 echo "making key"
 php artisan key:generate

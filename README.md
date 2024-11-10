@@ -29,8 +29,9 @@ The architecture consists of the following layers:
 
 ## USAGE
 
-- Cloen the repository with `git clone https://github.com/dounasth/accepted-spy-test.git`
-- Go to the `./docker` folder
+- Cloen the repository with `git clone https://github.com/dounasth/accepted-spy-test.git` or `git clone https://github.com/dounasth/accepted-spy-test.git a-folder-name-you-want`
+- Go to the `accepted-spy-test` folder or the folder name you entered
+- Go to the `docker` folder
 - Start the docker containers with `docker-compose up --build` or `docker-compose up` if already built
 - To run the tests in the docker, from the docker folder run
   `docker-compose exec accepted-spy-test-app php artisan test`
