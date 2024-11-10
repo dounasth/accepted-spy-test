@@ -15,7 +15,6 @@ class StoreSpyRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        // You can add authorization logic here
         return true;
     }
 

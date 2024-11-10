@@ -35,7 +35,7 @@ class CreateSpyEndpointTest extends TestCase
         ];
 
         // Make the request as an authenticated user
-        $response = $this->actingAs(User::all()->first()) // Replace with actual user creation if necessary
+        $response = $this->actingAs(User::all()->first())
         ->postJson('/api/spies', $data);
 
         // Assert the spy was created and the response is successful
@@ -126,9 +126,4 @@ class CreateSpyEndpointTest extends TestCase
             ->assertJsonValidationErrors(['first_name']);
     }
 
-    // Helper to create a user
-    private function createUser()
-    {
-        return \App\Models\User::factory()->create();
-    }
 }

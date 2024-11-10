@@ -11,7 +11,7 @@ class DateOfBirth extends DateTimeImmutable
     {
         parent::__construct($date);
 
-        // Enforce a business rule: Birth date cannot be in the future
+        // Rule: Birth date cannot be in the future
         if ($this > new DateTimeImmutable()) {
             throw new InvalidArgumentException("Date of birth cannot be in the future.");
         }
