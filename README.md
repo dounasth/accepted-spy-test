@@ -2,8 +2,10 @@
 
 ## High-Level Architecture
 
-The Spies API is a RESTful service built with Laravel, following Domain-Driven Design (DDD) and CQRS principles. The
-architecture consists of the following layers:
+The Spies API is a RESTful service built with Laravel 11 using PHP 8.3, Apache and MySQL, following Domain-Driven
+Design (DDD) and CQRS design principles. 
+
+The architecture consists of the following layers:
 
 - **Domain Layer**: Encapsulates core business logic and entities, such as value objects, models, domain events and
   repository contracts.
@@ -14,11 +16,12 @@ architecture consists of the following layers:
   across environments, available in the docker folder. It contains 2 services, the app and a mysql database. An env is
   used for parameterization and an apache is used for handling the requests. Upon building, migrations and seeders are
   run.
-- **Tests**: Tests are includes for features and units.
+- **Tests**: Tests are includes for features and units using PHPUnit.
 
 ## SETUP
 
 - First install docker according to your system (Windows, Linux, etc)
+  - see more here: https://docs.docker.com/engine/install/
 - Then open a terminal and `cd docker` to the docker directory
 - Run `docker-compose up --build` to see logs of the containers or `docker-compose up --build -d` to build and run the
   containers detached. If running detached, use `docker-compose logs -f` to view the logs
