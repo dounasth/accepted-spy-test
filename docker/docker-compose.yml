@@ -1,0 +1,44 @@
+networks:
+    accepted-spy-test-net:
+        driver: bridge
+
+services:
+    accepted-spy-test-app:
+        build:
+            context: ../
+            dockerfile: docker/Dockerfile
+        container_name: accepted-spy-test-app
+        restart: unless-stopped
+        working_dir: /var/www
+        volumes:
+            - ../:/var/www
+            - ./apache/apache.conf:/etc/apache2/sites-available/000-default.conf
+        environment:
+            - APP_ENV=local
+            - APP_DEBUG=true
+            - DB_CONNECTION=mysql
+            - DB_HOST=accepted-spy-test-db
+            - DB_PORT=3306
+            - DB_DATABASE=${DB_DATABASE}
+            - DB_USERNAME=${DB_USERNAME}
+            - DB_PASSWORD=${DB_PASSWORD}
+        ports:
+            - "8080:80"
+        depends_on:
+            - accepted-spy-test-db
+        networks:
+            - accepted-spy-test-net
+
+    accepted-spy-test-db:
+        image: mysql:latest
+        container_name: accepted-spy-test-db
+        restart: unless-stopped
+        environment:
+            MYSQL_DATABASE: ${DB_DATABASE}
+            MYSQL_USER: ${DB_USERNAME}
+            MYSQL_PASSWORD: ${DB_PASSWORD}
+            MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
+        ports:
+            - "3306:3306"
+        networks:
+            - accepted-spy-test-net
