@@ -28,7 +28,7 @@ COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 COPY ../. .
 
 # Install PHP dependencies for Laravel
-RUN composer install --optimize-autoloader --no-dev
+RUN composer install
 
 # Set permissions for Laravel's storage and cache directories
 RUN chown -R www-data:www-data /var/www \
