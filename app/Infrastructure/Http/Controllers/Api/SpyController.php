@@ -5,7 +5,6 @@ namespace App\Infrastructure\Http\Controllers\Api;
 use App\Application\Commands\CreateSpy;
 use App\Application\Contracts\CreateSpyActionContract;
 use App\Application\Contracts\ListSpiesQueryContract;
-use App\Application\DTOs\SpyDTO;
 use App\Application\Queries\ListSpiesQuery;
 use App\Domain\Models\Spy;
 use App\Domain\Repositories\SpyRepository;
@@ -48,12 +47,9 @@ class SpyController
 
         $spy = $createSpyAction->execute($command);
 
-        // Wrap the response in SpyDTO
-        $spyDTO = new SpyDTO($spy);
-
         return response()->json([
             'message' => 'Spy created successfully',
-            'data' => $spyDTO->toArray()
+            'data' => $spy->toArray()
         ], 201);
     }
 
@@ -67,10 +63,9 @@ class SpyController
     {
         // Fetch 5 random spies
         $randomSpies = $repository->getRandom(5);
-        $randomSpiesDTO = $randomSpies->map(fn($spy) => (new SpyDTO($spy)));
 
         return response()->json([
-            'data' => $randomSpiesDTO,
+            'data' => $randomSpies,
         ]);
     }
 
@@ -95,9 +90,6 @@ class SpyController
                 ->setSort($request->input('sort', 'full_name'));
 
             $spies = $query->execute();
-            $spies->getCollection()->transform(function (Spy $spy) {
-                return new SpyDTO($spy);
-            });
 
             return response()->json($spies);
         } catch (\InvalidArgumentException $e) {
