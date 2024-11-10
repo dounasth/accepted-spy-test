@@ -49,6 +49,86 @@
 				}
 			},
 			"response": []
+		},
+		{
+			"name": "/api/spies",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"try {\r",
+							"    const response = await pm.sendRequest({\r",
+							"        url: pm.collectionVariables.get(\"host\") + \"/api/login\",\r",
+							"        method: \"POST\",\r",
+							"        header: {\r",
+							"            \"Content-Type\": \"application/json\",\r",
+							"            \"Accept\": \"application/json\"\r",
+							"        },\r",
+							"        body: {\r",
+							"            mode: \"raw\",\r",
+							"            raw: JSON.stringify({\r",
+							"                email: pm.collectionVariables.get('email'),\r",
+							"                password: pm.collectionVariables.get('password')\r",
+							"            })\r",
+							"        }\r",
+							"    });\r",
+							"    const token = response.json().token; \r",
+							"    pm.collectionVariables.set(\"user_token\", token);\r",
+							"} catch (err) {\r",
+							"    console.error(err);\r",
+							"}"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{user_token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"first_name\": \"James\",\r\n    \"last_name\": \"Bond\",\r\n    \"agency\": \"MI6\",\r\n    \"country_of_operation\": \"United Kingdom\",\r\n    \"date_of_birth\": \"1920-11-11\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{host}}/api/spies",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"api",
+						"spies"
+					]
+				}
+			},
+			"response": []
 		}
 	],
 	"event": [
@@ -77,6 +157,16 @@
 		{
 			"key": "host",
 			"value": "http://localhost",
+			"type": "string"
+		},
+		{
+			"key": "email",
+			"value": "dounasth@gmail.com",
+			"type": "string"
+		},
+		{
+			"key": "password",
+			"value": "accepted_test",
 			"type": "string"
 		},
 		{
