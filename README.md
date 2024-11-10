@@ -29,7 +29,9 @@ The architecture consists of the following layers:
 
 ## USAGE
 
-- To run the tests in the docker, `cd docker` to the docker folder and run
+- Go to the `./docker` folder
+- Start the docker containers with `docker-compose up --build` or `docker-compose up` if already built
+- To run the tests in the docker, from the docker folder run
   `docker-compose exec accepted-spy-test-app php artisan test`
     - the tests refresh the database and run various seeds or factories according to their needs
 - A postman collection is included that can be used to test the container with postman.
