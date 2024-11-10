@@ -2,18 +2,18 @@
 
 namespace Database\Seeders;
 
-use App\Models\User;
+use App\Infrastructure\Persistence\SpyEloquentModel;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
-class UserSeeder extends Seeder
+class SpySeeder extends Seeder
 {
     /**
      * Run the database seeds.
      */
     public function run(): void
     {
-        User::truncate();
-        User::factory()->count(1)->create();
+        SpyEloquentModel::truncate();
+        SpyEloquentModel::factory()->count(50)->create();
     }
 }
