@@ -27,13 +27,6 @@ COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 # Copy existing application files
 COPY ../. .
 
-# Install PHP dependencies for Laravel
-RUN composer install
-
-# Set permissions for Laravel's storage and cache directories
-RUN chown -R www-data:www-data /var/www \
-    && chmod -R 755 /var/www/storage
-
 # Copy wait-for-it.sh and entrypoint.sh scripts
 COPY docker/wait-for-it.sh /wait-for-it.sh
 COPY docker/entrypoint.sh /entrypoint.sh

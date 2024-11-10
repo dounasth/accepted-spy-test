@@ -6,6 +6,8 @@ echo "Waiting for the database to be ready..."
 
 composer install
 
+chown -R www-data:www-data /var/www && chmod -R 755 /var/www/storage
+
 # make key
 echo "making key"
 php artisan key:generate
